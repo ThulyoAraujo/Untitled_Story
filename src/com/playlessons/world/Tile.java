@@ -53,7 +53,7 @@ public class Tile {
 	public static final BufferedImage TILE_BUILDINGROOFTOPRIGHT = Game.spritesheet.getsprite(29 * 16, 2 * 16, 16, 16);
 
 	public static final BufferedImage TILE_BUILDINGHOSPITALDOOR = Game.spritesheet.getsprite(28 * 16, 8 * 16, 16, 16);
-	public static final BufferedImage TILE_FLOORINFRONTOFHELPER = Game.spritesheet.getsprite(16, 4 * 16, 16, 16);
+	public static final BufferedImage TILE_FLOORINFRONTOF = Game.spritesheet.getsprite(16, 4 * 16, 16, 16);
 
 	public static final BufferedImage TILE_DESKMARKETLEFT = Game.spritesheet.getsprite(24 * 16, 3 * 16, 16, 16);
 	public static final BufferedImage TILE_DESKMARKETRIGHT = Game.spritesheet.getsprite(25 * 16, 3 * 16, 16, 16);

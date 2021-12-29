@@ -9,9 +9,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -37,7 +34,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public static JFrame frame;
 	private Thread thread;
 	private boolean isRunning = true;
-	public static final int WIDTH = 240; // 240
+	public static final int WIDTH = 256; // 240 - 256
 	public static final int HEIGHT = 160; // 160
 	public static final int SCALE = 3; // 3
 
@@ -243,19 +240,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			bullets.get(i).render(g);
 			;
 		}
-		ui.render(g);
-		/***/
 
 		g.dispose();
 		g = bs.getDrawGraphics();
-		g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
-		// Munição exibida na tela
-		g.setFont(new Font("arial", Font.BOLD, 20));
-		g.setColor(Color.yellow);
-		g.drawString("Munição: " + player.ammo, 580, 20);
-		g.setFont(new Font("arial", Font.BOLD, 15));
-		g.setColor(Color.white);
-		g.drawString("Desenvolvido por THÚLYO ARAUJO", WIDTH * SCALE - 260, HEIGHT * SCALE - 10);
+		g.drawImage(image, 0, 32, WIDTH * SCALE, HEIGHT * SCALE - 32, null);
+		// Renderiza o hud do player
+		ui.render(g);
 
 		if (gameState == "GAME_OVER") {
 			Graphics2D g2 = (Graphics2D) g;
@@ -349,7 +339,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			if (gameState == "MENU") {
 				menu.enter = true;
 			} else if (gameState == "NORMAL") {
+				if(player.heartEmoji) {
 				player.gameHospital = true;
+				} else if (player.monsterEmoji) {
+					player.gameChallenge = true;
+				}
 			}
 		}
 

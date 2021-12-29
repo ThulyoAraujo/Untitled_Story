@@ -1,4 +1,4 @@
-package com.playlessons.entities;
+/*package com.playlessons.entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,60 +9,26 @@ import com.playlessons.main.Game;
 import com.playlessons.world.Camera;
 import com.playlessons.world.World;
 
-public class EnemyNovo extends Entity {
+public class Enemy extends Entity {
 
-	public int right_dir = 0, left_dir = 1, up_dir = 2, down_dir = 3;
-	// Direção inicial do inimigo
-	public int dir = down_dir;
 	private double speed = 0.4;
 
 	private int maskx = 8, masky = 8, maskw = 10, maskh = 10;
 
-	private int frames = 0, maxFrames = 8, index = 0, maxIndex = 2;
+	private int frames = 0, maxFrames = 20, index = 0, maxIndex = 1;
 
-	// Criação das listas de imagens do movimento do inimigo
-	private BufferedImage[] rightEnemy;
-	private BufferedImage[] leftEnemy;
-	private BufferedImage[] upEnemy;
-	private BufferedImage[] downEnemy;
-	private BufferedImage enemyDamage;
-
+	private BufferedImage[] sprites;
+	
 	private int lifeEnemy = 10;
-
+	
 	private boolean isDamaged = false;
 	private int damageFrames = 10, damageCurrent = 0;
 
-	public EnemyNovo(int x, int y, int width, int height, BufferedImage sprite, int enemyNumber) {
+	public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, null);
-
-		// Listas de imagens do jogador
-		rightEnemy = new BufferedImage[3];
-		leftEnemy = new BufferedImage[3];
-		upEnemy = new BufferedImage[3];
-		downEnemy = new BufferedImage[3];
-
-		switch (enemyNumber) {
-		case 1:
-			// MORCEGO
-			enemyDamage = Game.spritesheet.getsprite(16, 5 * 16, 16, 16);
-			for (int i = 0; i < 3; i++) {
-				rightEnemy[i] = Game.spritesheet.getsprite(48 + (i * 16), 8 * 16, 16, 16);
-			}
-			for (int i = 0; i < 3; i++) {
-				leftEnemy[i] = Game.spritesheet.getsprite(48 + (i * 16), 7 * 16, 16, 16);
-			}
-			for (int i = 0; i < 3; i++) {
-				upEnemy[i] = Game.spritesheet.getsprite(48 + (i * 16), 9 * 16, 16, 16);
-			}
-			for (int i = 0; i < 3; i++) {
-				downEnemy[i] = Game.spritesheet.getsprite(48 + (i * 16), 6 * 16, 16, 16);
-			}
-			break;
-
-		default:
-			break;
-		}
-
+		sprites = new BufferedImage[2];
+		sprites[0] = Game.spritesheet.getsprite(112, 16, 16, 16);
+		sprites[1] = Game.spritesheet.getsprite(112 + 16, 16, 16, 16);
 	}
 
 	public void tick() {
@@ -73,21 +39,17 @@ public class EnemyNovo extends Entity {
 			if (Game.rand.nextInt(100) < 50) {
 				if ((int) x < Game.player.getX() && World.isFree((int) (x + speed), this.getY())
 						&& !isColidding((int) (x + speed), this.getY())) {
-					dir = right_dir;
 					x += speed;
 				} else if ((int) x > Game.player.getX() && World.isFree((int) (x - speed), this.getY())
 						&& !isColidding((int) (x - speed), this.getY())) {
-					dir = left_dir;
 					x -= speed;
 				}
 
 				if ((int) y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed))
 						&& !isColidding(this.getX(), (int) (y + speed))) {
-					dir = down_dir;
 					y += speed;
 				} else if ((int) y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed))
 						&& !isColidding(this.getX(), (int) (y - speed))) {
-					dir = up_dir;
 					y -= speed;
 				}
 			}
@@ -97,10 +59,10 @@ public class EnemyNovo extends Entity {
 			if (Game.rand.nextInt(100) < 10) {
 				Game.player.life -= Game.rand.nextInt(3);
 				Game.player.isDamaged = true;
-				// if (Game.player.life <= 0) {
-				// Game over;
-				// System.exit(1);
-				// }
+				if (Game.player.life <= 0) {
+					//Game over;
+					//System.exit(1);
+				}
 				System.out.println("Vida: " + Game.player.life);
 			}
 		}
@@ -112,21 +74,20 @@ public class EnemyNovo extends Entity {
 				index = 0;
 			}
 		}
-
+		
 		collidingBullet();
-
-		if (lifeEnemy <= 0) {
-			Player.moreMoneyForPlayer();
+		
+		if(lifeEnemy <= 0) {
 			destroySelf();
 			return;
 		}
-
-		if (isDamaged) {
+		
+		if(isDamaged) {
 			this.damageCurrent++;
 			if (this.damageCurrent == this.damageFrames) {
 				this.damageCurrent = 0;
 				this.isDamaged = false;
-
+				
 			}
 		}
 	}
@@ -135,12 +96,12 @@ public class EnemyNovo extends Entity {
 		Game.enemies.remove(this);
 		Game.entities.remove(this);
 	}
-
+	
 	public void collidingBullet() {
-		for (int i = 0; i < Game.bullets.size(); i++) {
+		for(int i = 0; i < Game.bullets.size(); i++ ) {
 			Entity e = Game.bullets.get(i);
-			if (e instanceof BulletShoot) {
-				if (Entity.isColidding(this, e)) {
+			if(e instanceof BulletShoot) {
+				if(Entity.isColidding(this, e)) {
 					isDamaged = true;
 					lifeEnemy--;
 					Game.bullets.remove(i);
@@ -149,7 +110,7 @@ public class EnemyNovo extends Entity {
 			}
 		}
 	}
-
+	
 	public boolean isColiddingWithPlayer() {
 		Rectangle enemyCurrent = new Rectangle(this.getX() + maskx, this.getY() + masky, maskw, maskh);
 		Rectangle player = new Rectangle(Game.player.getX(), Game.player.getY(), 16, 16);
@@ -160,7 +121,7 @@ public class EnemyNovo extends Entity {
 	public boolean isColidding(int xnext, int ynext) {
 		Rectangle enemyCurrent = new Rectangle(xnext + maskx, ynext + masky, maskw, maskh);
 		for (int i = 0; i < Game.enemies.size(); i++) {
-			EnemyNovo e = Game.enemies.get(i);
+			Enemy e = Game.enemies.get(i);
 			if (e == this) {
 				continue;
 			}
@@ -173,19 +134,15 @@ public class EnemyNovo extends Entity {
 	}
 
 	public void render(Graphics g) {
-		if (!isDamaged) {
-			if (dir == right_dir) {
-				g.drawImage(rightEnemy[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-			} else if (dir == left_dir) {
-				g.drawImage(leftEnemy[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-			} else if (dir == up_dir) {
-				g.drawImage(upEnemy[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-			} else if (dir == down_dir) {
-				g.drawImage(downEnemy[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-			}
+		if(!isDamaged) {
+			g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		// g.setColor(Color.blue);
+		// g.fillRect(this.getX() + maskx - Camera.x, this.getY() + masky - Camera.y,
+		// maskw, maskh);
 		} else {
-			g.drawImage(enemyDamage, this.getX() - Camera.x, this.getY() - Camera.y, null);
+			g.drawImage(Entity.ENEMY_FEEDBACK, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 	}
 
 }
+*/

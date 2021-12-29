@@ -189,19 +189,24 @@ public class World {
 							restartingGame = false;
 						}
 						// CHÃO NA FRENTE DA CURANDEIRA
-						tiles[xx + (yy * WIDTH)] = new HospitalTile(xx * 16, yy * 16, Tile.TILE_FLOORINFRONTOFHELPER);
-					} else if (pixelAtual == 0xFF0026FF && restartingGame == false) {
+						tiles[xx + (yy * WIDTH)] = new HospitalTile(xx * 16, yy * 16, Tile.TILE_FLOORINFRONTOF);
+					} else if (pixelAtual == 0xFFFF006D) {
+						// MESA LATERAL DIREITA DOS DESAFIOS
+						tiles[xx + (yy * WIDTH)] = new ChallengeTile(xx * 16, yy * 16, Tile.TILE_FLOORINFRONTOF);
+					}
+
+					else if (pixelAtual == 0xFF0026FF && restartingGame == false) {
 						Game.player.setX(xx * 16);
 						Game.player.setY(yy * 16);
 					} else if (pixelAtual == 0xFFFF00E5) {
-						// Enemy
+						// NPC
 						NpcGeneral npc = new NpcGeneral(xx * 16, yy * 16, 16, 16, Entity.NPC_GENERAL);
 						Game.entities.add(npc);
 						Game.npcs.add(npc);
 
 					} else if (pixelAtual == 0xFFFF0000) {
-						// Enemy
-						EnemyNovo en = new EnemyNovo(xx * 16, yy * 16, 16, 16, Entity.ENEMY_EN);
+						// INIMIGO
+						EnemyNovo en = new EnemyNovo(xx * 16, yy * 16, 16, 16, Entity.ENEMY_BAT, 1);
 						Game.entities.add(en);
 						Game.enemies.add(en);
 					} else if (pixelAtual == 0xFFFF6A00) {
@@ -331,13 +336,37 @@ public class World {
 		return false;
 	}
 
+	public static boolean challenge(int xnext, int ynext) {
+		int x1 = xnext / TILE_SIZE;
+		int y1 = ynext / TILE_SIZE;
+
+		int x2 = (xnext + TILE_SIZE - 1) / TILE_SIZE;
+		int y2 = ynext / TILE_SIZE;
+
+		int x3 = xnext / TILE_SIZE;
+		int y3 = (ynext + TILE_SIZE - 1) / TILE_SIZE;
+
+		int x4 = (xnext + TILE_SIZE - 1) / TILE_SIZE;
+		int y4 = (ynext + TILE_SIZE - 1) / TILE_SIZE;
+
+		if (((tiles[x1 + (y1 * World.WIDTH)] instanceof ChallengeTile)
+				|| (tiles[x2 + (y2 * World.WIDTH)] instanceof ChallengeTile)
+				|| (tiles[x3 + (y3 * World.WIDTH)] instanceof ChallengeTile)
+				|| (tiles[x4 + (y4 * World.WIDTH)] instanceof ChallengeTile))) {
+			return true;
+		}
+		return false;
+	}
+
 	public static void restartGame(String level, int currentLevel) {
 		Game.entities.clear();
 		Game.enemies.clear();
 		Game.entities = new ArrayList<Entity>();
 		Game.enemies = new ArrayList<EnemyNovo>();
 		Game.spritesheet = new Spritesheet("/spritesheet.png");
-		//Game.player = new Player(2 * 16, 2 * 16, 16, 16, Game.spritesheet.getsprite(32, 0, 16, 16));
+		if (restartingGame == true) {
+			Game.player = new Player(2 * 16, 2 * 16, 16, 16, Game.spritesheet.getsprite(32, 0, 16, 16));
+		}
 		Game.entities.add(Game.player);
 		Game.world = new World("/" + level, currentLevel);
 		return;

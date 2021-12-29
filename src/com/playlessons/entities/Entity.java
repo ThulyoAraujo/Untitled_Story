@@ -13,15 +13,21 @@ public class Entity {
 	public static BufferedImage LIFEPACK_EN = Game.spritesheet.getsprite(6 * 16, 0, 16, 16);
 	public static BufferedImage WEAPON_EN = Game.spritesheet.getsprite(7 * 16, 0, 16, 16);
 	public static BufferedImage BULLET_EN = Game.spritesheet.getsprite(7 * 16, 16, 16, 16);
-	public static BufferedImage ENEMY_EN = Game.spritesheet.getsprite(7 * 16, 16, 16, 16);
-	public static BufferedImage ENEMY_EN2 = Game.spritesheet.getsprite(8 * 16, 16, 16, 16);
-	public static BufferedImage ENEMY_FEEDBACK = Game.spritesheet.getsprite(9 * 16, 16, 16, 16);
+	public static BufferedImage ENEMY_BAT = Game.spritesheet.getsprite(4 * 16, 6 * 16, 16, 16);
+	// public static BufferedImage ENEMY_EN2 = Game.spritesheet.getsprite(8 * 16,
+	// 16, 16, 16);
+	// public static BufferedImage ENEMY_FEEDBACK = Game.spritesheet.getsprite(9 *
+	// 16, 16, 16, 16);
 	public static BufferedImage GUN_RIGHT = Game.spritesheet.getsprite(8 * 16, 0, 16, 16);
 	public static BufferedImage GUN_LEFT = Game.spritesheet.getsprite(9 * 16, 0, 16, 16);
 	public static BufferedImage GUN_UP = Game.spritesheet.getsprite(8 * 16, 16, 16, 16);
 	public static BufferedImage GUN_DOWN = Game.spritesheet.getsprite(9 * 16, 16, 16, 16);
 	public static BufferedImage NPC_GENERAL = Game.spritesheet.getsprite(6 * 16, 6 * 16, 16, 16);
+
 	public static BufferedImage HEARTEMOJI = Game.spritesheet.getsprite(2 * 16, 3 * 16, 16, 16);
+	public static BufferedImage FRAMEWHITELEFT = Game.spritesheet.getsprite(3 * 16, 3 * 16, 16, 16);
+	public static BufferedImage FRAMEPNG = Game.spritesheet.getsprite(4 * 16, 3 * 16, 16, 16);
+	public static BufferedImage FRAMEWHITERIGHT = Game.spritesheet.getsprite(5 * 16, 3 * 16, 16, 16);
 	
 	protected double x, y;
 
@@ -32,6 +38,7 @@ public class Entity {
 	private int maskx, masky, mwidth, mheight;
 
 	public Entity(int x, int y, int width, int height, BufferedImage sprite) {
+		
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -84,7 +91,7 @@ public class Entity {
 	}
 
 	public void tick() {
-
+		
 	}
 
 	public static boolean isColidding(Entity e1, Entity e2) {

@@ -1,0 +1,23 @@
+- Artes para o jogo/ Sprites: open game art.
+- Pause, game over e start menu. OK
+- Sistema de animação para o player. OK
+- Controle do jogo pelo teclado. OK
+- Sistema de shooting. OK
+- Sistema para criação de mapa. OK
+- Sistema de vários níveis.
+-- Sistema de troca de mapas/níveis ao chegar em certo ponto do mapa.
+- Inimigos no jogo. OK
+- Boss Battle.
+- Coletar item. OK
+- Aumentar ataque ou defesa de acordo com item.
+- sistema de dano. OK
+- Sitema para salvar o jogo e carregar o jogo. OK
+-- Salvar o eixo x e y do player. OK
+- Áudio e música.
+
+-Personagem não pula obstáculos para a direita e cai em cima de obstáculos
+-Chão renderizando embaixo do player errado, de outro nível
+-Primeira cidade
+-Ao morrer, voltar na frente do último hospital visitado
+--Criar novo metódo: reset game
+-Bug ao passar de nível

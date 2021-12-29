@@ -33,6 +33,7 @@ public class Player extends Entity {
 	private boolean hasGun = false;
 
 	public int ammo = 0;
+	public static int money = 0;
 
 	public boolean isDamaged = false;
 	private int damageFrames = 0;
@@ -46,6 +47,10 @@ public class Player extends Entity {
 	public int lastHospital = 1;
 	public boolean saveGameHospital = false;
 	public static boolean gameHospital = false;
+	public static boolean heartEmoji = false;
+
+	public static boolean gameChallenge = false;
+	public static boolean monsterEmoji = false;
 
 	public int currentLevelBackup;
 	public int xBackup;
@@ -156,6 +161,7 @@ public class Player extends Entity {
 		checkCollisionAmmo();
 		checkCollisionGun();
 		checkCollisionHospital();
+		checkCollisionChallenge();
 
 		if (isDamaged) {
 			this.damageFrames++;
@@ -213,15 +219,37 @@ public class Player extends Entity {
 		Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT / 2), 0, World.HEIGHT * 16 - Game.HEIGHT);
 	}
 
+	public static void moreMoneyForPlayer() {
+		money++;
+	}
+
 	public void checkCollisionHospital() {
-		
-		if (gameHospital && World.newHospital((int) (x - speed), this.getY())) {
-			System.out.println("Novo hospital");
-			saveGameHospital = true;
-			life = 100;
-			gameHospital = false;
+
+		if (World.newHospital((int) (x - speed), this.getY())) {
+			heartEmoji = true;
+			if (gameHospital) {
+				System.out.println("Hospital");
+				saveGameHospital = true;
+				life = 100;
+				gameHospital = false;
+			}
 		} else {
+			heartEmoji = false;
 			saveGameHospital = false;
+		}
+	}
+
+	public void checkCollisionChallenge() {
+
+		if (World.challenge((int) (x - speed), this.getY())) {
+			monsterEmoji = true;
+			if (gameChallenge) {
+				System.out.println("Desafio");
+				gameChallenge = false;
+			}
+		} else {
+			monsterEmoji = false;
+		//	gameChallenge = false;
 		}
 	}
 
