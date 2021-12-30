@@ -40,7 +40,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 	public static int currentLevel = 1, MAX_LEVEL = 2;
 
-	private BufferedImage image;
+	public static BufferedImage image;
 
 	public static List<Entity> entities;
 	public static List<EnemyNovo> enemies;
@@ -339,8 +339,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			if (gameState == "MENU") {
 				menu.enter = true;
 			} else if (gameState == "NORMAL") {
-				if(player.heartEmoji) {
-				player.gameHospital = true;
+				if (player.heartEmoji) {
+					player.gameHospital = true;
 				} else if (player.monsterEmoji) {
 					player.gameChallenge = true;
 				}

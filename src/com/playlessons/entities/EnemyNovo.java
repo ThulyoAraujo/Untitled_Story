@@ -117,6 +117,7 @@ public class EnemyNovo extends Entity {
 
 		if (lifeEnemy <= 0) {
 			Player.moreMoneyForPlayer();
+			NpcGeneral.numberOfMonsterToKill();
 			destroySelf();
 			return;
 		}

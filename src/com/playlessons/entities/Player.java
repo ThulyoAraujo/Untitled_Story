@@ -43,12 +43,13 @@ public class Player extends Entity {
 	public double life = 100, maxLife = 100;
 	public int mx, my;
 
-	public boolean nextLevel = false;
+	public static boolean nextLevel = false;
 	public int lastHospital = 1;
 	public boolean saveGameHospital = false;
 	public static boolean gameHospital = false;
 	public static boolean heartEmoji = false;
 
+	public static boolean saveGameChallenge = false;
 	public static boolean gameChallenge = false;
 	public static boolean monsterEmoji = false;
 
@@ -244,12 +245,12 @@ public class Player extends Entity {
 		if (World.challenge((int) (x - speed), this.getY())) {
 			monsterEmoji = true;
 			if (gameChallenge) {
+				saveGameChallenge = true;
 				System.out.println("Desafio");
 				gameChallenge = false;
 			}
 		} else {
 			monsterEmoji = false;
-		//	gameChallenge = false;
 		}
 	}
 
@@ -323,6 +324,7 @@ public class Player extends Entity {
 					g.drawImage(Entity.GUN_DOWN, this.getX() + 2 - Camera.x, this.getY() + 7 - Camera.y, null);
 				}
 			}
+
 		} else {
 			g.drawImage(playerDamage, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}

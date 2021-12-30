@@ -4,24 +4,26 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import com.playlessons.main.Game;
 import com.playlessons.world.Camera;
+import com.playlessons.world.ChallengeTile;
 import com.playlessons.world.World;
 
 public class NpcGeneral extends Entity {
-	
+
 	public static Random random;
-	
-	BufferedImage downNPC;
-	BufferedImage heartEmoji;
-	BufferedImage frameWhiteLeft;
-	BufferedImage framePng;
-	BufferedImage frameWhiteRight;
-	BufferedImage enemyBat;
+
+	public static BufferedImage downNPC;
+	public static BufferedImage heartEmoji;
+	public static BufferedImage frameWhiteLeft;
+	public static BufferedImage framePng;
+	public static BufferedImage frameWhiteRight;
+	public static BufferedImage enemyBat;
 
 	boolean nurse = false;
 	boolean challenger = false;
-	int numberOfMonsterToKill;
-	String classOfTheMonster;
+	public static int numberOfMonsterToKill;
+	public static String classOfTheMonster;
 
 	public NpcGeneral(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -51,7 +53,15 @@ public class NpcGeneral extends Entity {
 		} else {
 			challenger = false;
 		}
-;
+	}
+
+	public static void numberOfMonsterToKill() {
+		numberOfMonsterToKill--;
+		if (numberOfMonsterToKill <= 0) {
+			Player.nextLevel = true;
+			Player.money += 10;
+			Player.saveGameChallenge = false;
+		}
 	}
 
 	public void render(Graphics g) {
@@ -63,7 +73,8 @@ public class NpcGeneral extends Entity {
 			g.drawImage(frameWhiteLeft, this.getX() - Camera.x - 16, this.getY() - Camera.y - 16, null);
 			g.drawImage(framePng, this.getX() - Camera.x, this.getY() - Camera.y - 16, null);
 			g.drawImage(enemyBat, this.getX() - Camera.x, this.getY() - Camera.y - 16, null);
-			g.drawString(Integer.toString(numberOfMonsterToKill), this.getX() - Camera.x - 10, this.getY() - Camera.y - 4);
+			g.drawString(Integer.toString(numberOfMonsterToKill), this.getX() - Camera.x - 10,
+					this.getY() - Camera.y - 4);
 			g.drawImage(frameWhiteRight, this.getX() - Camera.x + 16, this.getY() - Camera.y - 16, null);
 			g.drawString(classOfTheMonster, this.getX() - Camera.x + 19, this.getY() - Camera.y - 4);
 		}
