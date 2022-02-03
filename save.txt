@@ -1,4 +1,4 @@
-level:<
+level:=
 vida:=<<
-XPlayer:<
-YPlayer:<
+XPlayer:=D=
+YPlayer:>C>
